@@ -1,0 +1,112 @@
+# gcc8.5.0📁 `ChangeLog.md`
+🤖PG1.1
+- **ハードウェア**：玄界 (Genkai) single-core（1コア）
+- **モジュール**：GCC 8.5.0 (default)
+
+## Change Log
+
+- 基本の型：`ChangeLog_format.md`に記載
+- PMオーバーライド：なし
+
+### v1.1.0
+**変更点**: "キャッシュブロッキング追加（BLOCK_SIZE=64）"
+**結果**: ベースライン比4.0倍高速化 `8.52 GFLOPS`
+**コメント**: "64x64ブロックでL1/L2キャッシュ効率を改善。v1.0.0比で29%高速化"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:36:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx2 -mfma`
+- [x] **job**
+    - id: `4590880`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-29T14:36:59Z`
+    - end_time: `2025-12-29T14:36:59Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `8.52`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - block_size: `64`
+    - speedup_vs_baseline: `4.0x`
+    - speedup_vs_v1.0.0: `1.29x`
+
+</details>
+
+---
+
+### v1.0.0
+**変更点**: "AVX2 SIMD最適化 + ループ順序変更(i,k,j) + FMA命令"
+**結果**: ベースライン比3.1倍高速化 `6.62 GFLOPS`
+**コメント**: "ループ順序をi,j,k→i,k,jに変更しメモリアクセスパターン改善。AVX2で4要素同時処理、FMA命令使用"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:34:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx2 -mfma`
+- [x] **job**
+    - id: `4590874`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-29T14:34:42Z`
+    - end_time: `2025-12-29T14:34:43Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `6.62`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - baseline_perf: `2.13 GFLOPS`
+    - speedup: `3.1x`
+
+</details>
+
+---
+
+### Baseline (参考)
+**変更点**: "オリジナルコードにタイミング計測追加"
+**結果**: `2.13 GFLOPS`
+**コメント**: "ベースライン測定用。ループ順序i,j,k、最適化なし(-O2)"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:33:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O2`
+- [x] **job**
+    - id: `4590870`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-29T14:33:17Z`
+    - end_time: `2025-12-29T14:33:18Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `2.13`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- **params**:
+    - N: `1000`
+
+</details>
