@@ -10,7 +10,25 @@
 
 ---
 
-### v3.1.0 ★NEW LOCAL SOTA★
+### v3.2.0 ★NEW LOCAL SOTA★
+**変更点**: "AVX-512 8x16マイクロカーネル（MR=8に拡大）"
+**結果**: `37.21 GFLOPS` (N=1000, 0.054秒)
+**コメント**: "v3.1.0から6.6%向上。理論性能の46.5%達成。50%目標まであと7%"
+
+<details>
+
+- **生成時刻**: `2025-12-29T15:55:00Z`
+- [x] **compile**: options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**: id: `4590988`, status: `success`
+- [x] **test**: performance: `37.21`, unit: `GFLOPS`, checksum: `一致`
+- [x] **sota**: scope: `local`
+- **params**: BLOCK_I: `64`, BLOCK_K: `256`, BLOCK_J: `64`, mr: `8`, nr: `16`
+
+</details>
+
+---
+
+### v3.1.0
 **変更点**: "AVX-512 4x16マイクロカーネル + 端処理対応（PG1.1 v2.3.1ベース）"
 **結果**: `34.92 GFLOPS` (N=1000, 0.057秒)
 **コメント**: "PG1.1(34.37 GFLOPS)を1.6%上回る！理論性能の43.7%達成。gcc12.2.1がgcc8.5.0より高速"
