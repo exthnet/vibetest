@@ -8,6 +8,44 @@
 - 基本の型：`ChangeLog_format.md`に記載
 - PMオーバーライド：なし
 
+### v1.2.0
+**変更点**: "ループアンローリング追加（i方向4倍展開）"
+**結果**: ベースライン比5.7倍高速化 `12.17 GFLOPS`
+**コメント**: "i方向4倍アンローリングでレジスタ再利用を最大化。v1.1.0比で43%高速化"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:40:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx2 -mfma`
+- [x] **job**
+    - id: `4590886`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-29T14:40:00Z`
+    - end_time: `2025-12-29T14:40:01Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `12.17`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - block_size: `64`
+    - unroll_factor: `4`
+    - speedup_vs_baseline: `5.7x`
+    - speedup_vs_v1.1.0: `1.43x`
+
+</details>
+
+---
+
 ### v1.1.0
 **変更点**: "キャッシュブロッキング追加（BLOCK_SIZE=64）"
 **結果**: ベースライン比4.0倍高速化 `8.52 GFLOPS`
