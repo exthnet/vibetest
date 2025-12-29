@@ -10,7 +10,25 @@
 
 ---
 
-### v3.2.0 ★NEW LOCAL SOTA★
+### v3.3.0 ★NEW LOCAL SOTA★
+**変更点**: "8x16マイクロカーネル + ソフトウェアプリフェッチ追加"
+**結果**: `38.06 GFLOPS` (N=1000, 0.053秒)
+**コメント**: "v3.2.0から2.3%向上。理論性能の47.6%達成。50%目標まであと2.4%"
+
+<details>
+
+- **生成時刻**: `2025-12-29T16:05:00Z`
+- [x] **compile**: options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**: id: `4591xxx`, status: `success`
+- [x] **test**: performance: `38.06`, unit: `GFLOPS`, checksum: `一致`
+- [x] **sota**: scope: `local`
+- **params**: BLOCK_I: `64`, BLOCK_K: `256`, BLOCK_J: `64`, mr: `8`, nr: `16`, prefetch: `enabled`
+
+</details>
+
+---
+
+### v3.2.0
 **変更点**: "AVX-512 8x16マイクロカーネル（MR=8に拡大）"
 **結果**: `37.21 GFLOPS` (N=1000, 0.054秒)
 **コメント**: "v3.1.0から6.6%向上。理論性能の46.5%達成。50%目標まであと7%"
@@ -21,7 +39,6 @@
 - [x] **compile**: options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
 - [x] **job**: id: `4590988`, status: `success`
 - [x] **test**: performance: `37.21`, unit: `GFLOPS`, checksum: `一致`
-- [x] **sota**: scope: `local`
 - **params**: BLOCK_I: `64`, BLOCK_K: `256`, BLOCK_J: `64`, mr: `8`, nr: `16`
 
 </details>
