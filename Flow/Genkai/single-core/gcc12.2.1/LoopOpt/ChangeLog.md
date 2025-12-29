@@ -10,6 +10,23 @@
 
 ---
 
+### v2.0.0
+**変更点**: "4x8マイクロカーネル + キャッシュブロッキング（PG1.1戦略適用）"
+**結果**: `5.39 GFLOPS` (N=1000, 0.371秒)
+**コメント**: "gcc12.2.1ではマイクロカーネルが効果的でない。v1.1.0_optが最適"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:52:00Z`
+- [x] **compile**: status: `success`
+- [x] **job**: id: `4590904`, status: `success`
+- [x] **test**: performance: `5.39`, unit: `GFLOPS`, accuracy: `検証済み`
+- **params**: BLOCK_SIZE: `64`, MR: `4`, NR: `8`
+
+</details>
+
+---
+
 ### v1.1.0_opt
 **変更点**: "v1.1.0 + -funroll-loops -ftree-vectorize オプション追加"
 **結果**: `10.36 GFLOPS` (N=1000, 0.193秒)

@@ -8,6 +8,43 @@
 - 基本の型：`ChangeLog_format.md`に記載
 - PMオーバーライド：なし
 
+### v2.1.0
+**変更点**: "パッキング追加（A,B行列をキャッシュ効率良く再配置）"
+**結果**: ベースライン比14.0倍高速化 `29.80 GFLOPS`
+**コメント**: "連続メモリアクセスでTLBミス削減。aligned_loadが使用可能に。v2.0.0比3.7%改善"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:55:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx2 -mfma`
+- [x] **job**
+    - id: `4590903`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-29T14:55:00Z`
+    - end_time: `2025-12-29T14:55:01Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `29.80`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - packing: `enabled`
+    - speedup_vs_baseline: `14.0x`
+    - speedup_vs_v2.0.0: `1.04x`
+
+</details>
+
+---
+
 ### v2.0.0
 **変更点**: "4x8マイクロカーネル（レジスタブロッキング）実装"
 **結果**: ベースライン比13.5倍高速化 `28.75 GFLOPS`
