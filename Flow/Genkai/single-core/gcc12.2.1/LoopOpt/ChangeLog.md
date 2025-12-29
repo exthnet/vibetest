@@ -10,6 +10,24 @@
 
 ---
 
+### v3.0.0 ★NEW LOCAL SOTA★
+**変更点**: "AVX-512 intrinsics + 4x8マイクロカーネル + パッキング（PG1.1 v2.2.3ベース）"
+**結果**: `33.26 GFLOPS` (N=1000, 0.060秒)
+**コメント**: "30 GFLOPS目標達成！gcc12.2.1でもAVX-512 intrinsicsで高性能。理論性能の41.6%"
+
+<details>
+
+- **生成時刻**: `2025-12-29T15:35:00Z`
+- [x] **compile**: options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**: id: `4590928`, status: `success`
+- [x] **test**: performance: `33.26`, unit: `GFLOPS`, checksum: `一致`
+- [x] **sota**: scope: `local`
+- **params**: BLOCK_I: `64`, BLOCK_K: `256`, BLOCK_J: `64`, mr: `4`, nr: `8`
+
+</details>
+
+---
+
 ### v1.9.0
 **変更点**: "PGO (Profile-Guided Optimization) 適用"
 **結果**: `22.22 GFLOPS` (N=1000, 0.09秒)
