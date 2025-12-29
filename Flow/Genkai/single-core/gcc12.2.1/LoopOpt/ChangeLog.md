@@ -10,6 +10,23 @@
 
 ---
 
+### v1.1.0_avx512
+**変更点**: "v1.1.0 + AVX-512オプション明示追加"
+**結果**: `10.42 GFLOPS` (N=1000, 0.192秒)
+**コメント**: "-march=nativeが既にAVX-512有効化済み。v1.1.0_optと同等"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:54:00Z`
+- [x] **compile**: options: `-O3 -march=native -mavx512f -mavx512vl -funroll-loops -ftree-vectorize`
+- [x] **job**: id: `4590905`, status: `success`
+- [x] **test**: performance: `10.42`, unit: `GFLOPS`
+- **params**: BLOCK_SIZE: `64`
+
+</details>
+
+---
+
 ### v2.0.0
 **変更点**: "4x8マイクロカーネル + キャッシュブロッキング（PG1.1戦略適用）"
 **結果**: `5.39 GFLOPS` (N=1000, 0.371秒)
