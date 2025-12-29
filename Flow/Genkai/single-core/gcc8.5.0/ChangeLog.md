@@ -8,6 +8,190 @@
 - 基本の型：`ChangeLog_format.md`に記載
 - PMオーバーライド：なし
 
+### v2.5.4
+**変更点**: "AVX-512 8x8マイクロカーネル + 超大ブロック（BLOCK_I=256, BLOCK_J=256, BLOCK_K=256）"
+**結果**: ベースライン比20.8倍高速化 `44.33 GFLOPS`
+**コメント**: "ブロックサイズをさらに拡大。v2.5.3比8.5%改善。**理論性能80GFLOPSの55.4%達成**"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:10:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**
+    - id: `4591008`
+    - resource_group: `a-batch-low`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `44.33`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - block_i: `256`
+    - block_k: `256`
+    - block_j: `256`
+    - mr: `8`
+    - nr: `8`
+    - simd: `AVX-512`
+    - speedup_vs_baseline: `20.8x`
+    - speedup_vs_v2.5.3: `1.08x`
+
+</details>
+
+---
+
+### v2.5.3
+**変更点**: "AVX-512 8x8マイクロカーネル + 大ブロック（BLOCK_I=128, BLOCK_J=128）"
+**結果**: ベースライン比19.2倍高速化 `40.87 GFLOPS`
+**コメント**: "ブロックサイズ拡大でキャッシュ効率向上。v2.5.0比12.9%改善。理論性能80GFLOPSの51.1%達成"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:00:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**
+    - id: `4591007`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T01:00:00Z`
+    - end_time: `2025-12-30T01:00:01Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `40.87`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - block_i: `128`
+    - block_k: `256`
+    - block_j: `128`
+    - mr: `8`
+    - nr: `8`
+    - simd: `AVX-512`
+    - speedup_vs_baseline: `19.2x`
+    - speedup_vs_v2.5.0: `1.13x`
+
+</details>
+
+---
+
+### v2.5.0
+**変更点**: "AVX-512 8x8マイクロカーネル（MR=8, NR=8、8アキュムレータ）"
+**結果**: ベースライン比17.0倍高速化 `36.20 GFLOPS`
+**コメント**: "8行×8列で8レジスタ使用。v2.3.1比5.3%改善。理論性能80GFLOPSの45.3%達成"
+
+<details>
+
+- **生成時刻**: `2025-12-30T00:45:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**
+    - id: `4590990`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T00:45:00Z`
+    - end_time: `2025-12-30T00:45:01Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `36.20`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - mr: `8`
+    - nr: `8`
+    - simd: `AVX-512`
+    - speedup_vs_baseline: `17.0x`
+    - speedup_vs_v2.3.1: `1.05x`
+
+</details>
+
+---
+
+### v2.4.1
+**変更点**: "AVX-512 4x16マイクロカーネル + ソフトウェアプリフェッチ"
+**結果**: ベースライン比15.5倍高速化 `33.12 GFLOPS`
+**コメント**: "プリフェッチ追加も効果なし。コンパイラ最適化で既に実施済みと推測"
+
+<details>
+
+- **生成時刻**: `2025-12-30T00:35:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**
+    - id: `4590957`
+    - resource_group: `a-batch-low`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `33.12`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- **params**:
+    - N: `1000`
+    - mr: `4`
+    - nr: `16`
+    - prefetch_dist: `4`
+
+</details>
+
+---
+
+### v2.4.0
+**変更点**: "AVX-512 4x16マイクロカーネル + k-loop 2倍アンローリング"
+**結果**: ベースライン比15.8倍高速化 `33.75 GFLOPS`
+**コメント**: "手動アンローリングは効果なし。コンパイラ最適化で既に実施済みと推測"
+
+<details>
+
+- **生成時刻**: `2025-12-30T00:30:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**
+    - id: `4590943`
+    - resource_group: `a-batch-low`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `33.75`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- **params**:
+    - N: `1000`
+    - mr: `4`
+    - nr: `16`
+    - k_unroll: `2`
+
+</details>
+
+---
+
 ### v2.3.1
 **変更点**: "AVX-512 4x16マイクロカーネル（16要素同時処理、端処理対応）"
 **結果**: ベースライン比16.1倍高速化 `34.37 GFLOPS`
