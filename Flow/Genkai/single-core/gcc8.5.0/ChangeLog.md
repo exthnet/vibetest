@@ -8,6 +8,85 @@
 - 基本の型：`ChangeLog_format.md`に記載
 - PMオーバーライド：なし
 
+### v2.0.0
+**変更点**: "4x8マイクロカーネル（レジスタブロッキング）実装"
+**結果**: ベースライン比13.5倍高速化 `28.75 GFLOPS`
+**コメント**: "4x8レジスタブロッキングで演算密度を最大化。v1.3.0比で2.3倍の大幅改善"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:50:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx2 -mfma`
+- [x] **job**
+    - id: `4590899`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-29T14:50:00Z`
+    - end_time: `2025-12-29T14:50:01Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `28.75`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - block_i: `64`
+    - block_k: `256`
+    - block_j: `64`
+    - mr: `4`
+    - nr: `8`
+    - speedup_vs_baseline: `13.5x`
+    - speedup_vs_v1.3.0: `2.3x`
+
+</details>
+
+---
+
+### v1.3.0
+**変更点**: "ソフトウェアプリフェッチ追加（PREFETCH_DIST=8）"
+**結果**: ベースライン比5.8倍高速化 `12.39 GFLOPS`
+**コメント**: "B行列の先読みでキャッシュミス削減。v1.2.0比で1.8%改善"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:45:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx2 -mfma`
+- [x] **job**
+    - id: `4590891`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-29T14:45:00Z`
+    - end_time: `2025-12-29T14:45:01Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `12.39`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - block_size: `64`
+    - unroll_factor: `4`
+    - prefetch_dist: `8`
+    - speedup_vs_baseline: `5.8x`
+
+</details>
+
+---
+
 ### v1.2.0
 **変更点**: "ループアンローリング追加（i方向4倍展開）"
 **結果**: ベースライン比5.7倍高速化 `12.17 GFLOPS`

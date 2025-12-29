@@ -10,6 +10,41 @@
 
 ---
 
+### v1.1.0_opt
+**変更点**: "v1.1.0 + -funroll-loops -ftree-vectorize オプション追加"
+**結果**: `10.36 GFLOPS` (N=1000, 0.193秒)
+**コメント**: "コンパイラオプション追加でv1.1.0(9.57 GFLOPS)から8%向上。新LOCAL SOTA"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:48:00Z`
+- [x] **compile**: status: `success`, options: `-O3 -march=native -funroll-loops -ftree-vectorize`
+- [x] **job**: id: `4590902`, status: `success`
+- [x] **test**: performance: `10.36`, unit: `GFLOPS`
+- [x] **sota**: scope: `local`
+- **params**: BLOCK_SIZE: `64`, compiler_opts: `extended`
+
+</details>
+
+---
+
+### v1.3.0
+**変更点**: "キャッシュブロッキング + 2x2レジスタブロッキング"
+**結果**: `7.60 GFLOPS` (N=1000, 0.263秒)
+**コメント**: "レジスタブロッキングもコンパイラ最適化を妨げ、v1.1.0より低下"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:46:00Z`
+- [x] **compile**: status: `success`
+- [x] **job**: id: `4590901`, status: `success`
+- [x] **test**: performance: `7.60`, unit: `GFLOPS`, accuracy: `検証済み`
+- **params**: BLOCK_SIZE: `64`, register_block: `2x2`
+
+</details>
+
+---
+
 ### v1.2.0
 **変更点**: "キャッシュブロッキング + 4xループアンローリング"
 **結果**: `7.91 GFLOPS` (N=1000, 0.253秒)
