@@ -10,6 +10,24 @@
 
 ---
 
+### v1.5.0
+**変更点**: "64バイトアライメント + -ffast-math オプション追加"
+**結果**: `22.22 GFLOPS` (N=1000, 0.09秒)
+**コメント**: "-ffast-mathとメモリアライメントでv1.1.0_avx512から2.1倍高速化。新LOCAL SOTA"
+
+<details>
+
+- **生成時刻**: `2025-12-29T15:05:00Z`
+- [x] **compile**: options: `-O3 -march=native -mavx512f -mavx512vl -funroll-loops -ftree-vectorize -ffast-math`
+- [x] **job**: id: `4590908`, status: `success`
+- [x] **test**: performance: `22.22`, unit: `GFLOPS`
+- [x] **sota**: scope: `local`
+- **params**: BLOCK_SIZE: `64`, alignment: `64-byte`, fast-math: `enabled`
+
+</details>
+
+---
+
 ### v1.1.0_avx512
 **変更点**: "v1.1.0 + AVX-512オプション明示追加"
 **結果**: `10.42 GFLOPS` (N=1000, 0.192秒)
