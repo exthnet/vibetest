@@ -8,6 +8,45 @@
 - 基本の型：`ChangeLog_format.md`に記載
 - PMオーバーライド：なし
 
+### v2.2.3
+**変更点**: "AVX-512マイクロカーネル（512ビットSIMD、8要素同時処理）"
+**結果**: ベースライン比15.2倍高速化 `32.29 GFLOPS`
+**コメント**: "AVX-512で8要素同時処理。v2.1.0比8.4%改善。理論性能80GFLOPSの40.4%達成"
+
+<details>
+
+- **生成時刻**: `2025-12-30T00:05:00Z`
+- [x] **compile**
+    - status: `success`
+    - warnings: `none`
+    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**
+    - id: `4590924`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T00:05:00Z`
+    - end_time: `2025-12-30T00:05:01Z`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `32.29`
+    - unit: `GFLOPS`
+    - checksum_c00: `3838895.050000`
+    - checksum_cNN: `513888385.000000`
+- [x] **sota**
+    - scope: `local`
+- **params**:
+    - N: `1000`
+    - mr: `4`
+    - nr: `8`
+    - simd: `AVX-512`
+    - speedup_vs_baseline: `15.2x`
+    - speedup_vs_v2.1.0: `1.08x`
+
+</details>
+
+---
+
 ### v2.1.0
 **変更点**: "パッキング追加（A,B行列をキャッシュ効率良く再配置）"
 **結果**: ベースライン比14.0倍高速化 `29.80 GFLOPS`

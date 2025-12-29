@@ -10,7 +10,73 @@
 
 ---
 
-### v1.5.0
+### v1.9.0
+**変更点**: "PGO (Profile-Guided Optimization) 適用"
+**結果**: `22.22 GFLOPS` (N=1000, 0.09秒)
+**コメント**: "PGOもv1.5.0と同等。gcc12.2.1での最適化は限界か"
+
+<details>
+
+- **生成時刻**: `2025-12-29T15:25:00Z`
+- [x] **compile**: options: `-O3 -march=native -ffast-math -fprofile-use`
+- [x] **job**: id: `4590923`, status: `success`
+- [x] **test**: performance: `22.22`, unit: `GFLOPS`
+- **params**: PGO: `enabled`
+
+</details>
+
+---
+
+### v1.8.0
+**変更点**: "omp simd pragma追加"
+**結果**: `22.22 GFLOPS` (N=1000, 0.09秒)
+**コメント**: "omp simd pragmaもv1.5.0と同等の性能"
+
+<details>
+
+- **生成時刻**: `2025-12-29T15:20:00Z`
+- [x] **compile**: options: `-O3 -march=native -ffast-math -fopenmp-simd`
+- [x] **job**: id: `4590917`, status: `success`
+- [x] **test**: performance: `22.22`, unit: `GFLOPS`
+
+</details>
+
+---
+
+### v1.7.0
+**変更点**: "BLOCK_SIZE=48 + pragma ivdep"
+**結果**: `18.18 GFLOPS` (N=1000, 0.11秒)
+**コメント**: "BLOCK_SIZE=48はv1.5.0(64)より低下"
+
+<details>
+
+- **生成時刻**: `2025-12-29T15:15:00Z`
+- [x] **compile**: status: `success`
+- [x] **job**: id: `4590912`, status: `success`
+- [x] **test**: performance: `18.18`, unit: `GFLOPS`
+- **params**: BLOCK_SIZE: `48`
+
+</details>
+
+---
+
+### v1.6.0
+**変更点**: "追加アグレッシブオプション (-fno-signed-zeros等)"
+**結果**: `22.22 GFLOPS` (N=1000, 0.09秒)
+**コメント**: "追加オプションはv1.5.0と同等。効果なし"
+
+<details>
+
+- **生成時刻**: `2025-12-29T15:10:00Z`
+- [x] **compile**: options: `-O3 -march=native -ffast-math -fno-signed-zeros -fno-trapping-math -fassociative-math -freciprocal-math`
+- [x] **job**: id: `4590911`, status: `success`
+- [x] **test**: performance: `22.22`, unit: `GFLOPS`
+
+</details>
+
+---
+
+### v1.5.0 ★LOCAL SOTA★
 **変更点**: "64バイトアライメント + -ffast-math オプション追加"
 **結果**: `22.22 GFLOPS` (N=1000, 0.09秒)
 **コメント**: "-ffast-mathとメモリアライメントでv1.1.0_avx512から2.1倍高速化。新LOCAL SOTA"
