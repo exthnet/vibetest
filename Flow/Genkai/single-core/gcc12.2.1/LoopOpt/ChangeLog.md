@@ -10,6 +10,57 @@
 
 ---
 
+### v1.2.0
+**変更点**: "キャッシュブロッキング + 4xループアンローリング"
+**結果**: `7.91 GFLOPS` (N=1000, 0.253秒)
+**コメント**: "手動アンローリングはコンパイラ最適化を妨げ、v1.1.0より低下"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:42:00Z`
+- [x] **compile**: status: `success`
+- [x] **job**: id: `4590894`, status: `success`
+- [x] **test**: performance: `7.91`, unit: `GFLOPS`
+- **params**: BLOCK_SIZE: `64`, unroll: `4x`
+
+</details>
+
+---
+
+### v1.1.2
+**変更点**: "キャッシュブロッキング (BLOCK_SIZE=128)"
+**結果**: `8.37 GFLOPS` (N=1000, 0.239秒)
+**コメント**: "BLOCK_SIZE=64より低下、L1キャッシュオーバーフロー"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:40:00Z`
+- [x] **compile**: status: `success`
+- [x] **job**: id: `4590889`, status: `success`
+- [x] **test**: performance: `8.37`, unit: `GFLOPS`
+- **params**: BLOCK_SIZE: `128`
+
+</details>
+
+---
+
+### v1.1.1
+**変更点**: "キャッシュブロッキング (BLOCK_SIZE=32)"
+**結果**: `8.10 GFLOPS` (N=1000, 0.247秒)
+**コメント**: "BLOCK_SIZE=64より低下、ブロックオーバーヘッド増加"
+
+<details>
+
+- **生成時刻**: `2025-12-29T14:39:00Z`
+- [x] **compile**: status: `success`
+- [x] **job**: id: `4590887`, status: `success`
+- [x] **test**: performance: `8.10`, unit: `GFLOPS`
+- **params**: BLOCK_SIZE: `32`
+
+</details>
+
+---
+
 ### v1.1.0
 **変更点**: "キャッシュブロッキング (BLOCK_SIZE=64) + i-k-j順序"
 **結果**: `9.57 GFLOPS` (N=1000, 0.209秒)
