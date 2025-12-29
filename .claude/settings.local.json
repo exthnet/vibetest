@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "mcp__desktop-commander__start_process|Bash",
+      "hooks": [{
+        "type": "command",
+        "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/post_tool_ssh_handler.py"
+      }]
+    }],
+    "Stop": [{
+      "hooks": [{
+        "type": "command",
+        "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/stop.py"
+      }]
+    }],
+    "SessionStart": [{
+      "hooks": [{
+        "type": "command",
+        "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session_start.py"
+      }]
+    }]
+  },
+  "envs": {
+    "DISABLE_AUTOUPDATER": "1"
+  }
+}
