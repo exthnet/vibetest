@@ -8,6 +8,44 @@
 - 基本の型：`ChangeLog_format.md`に記載
 - PMオーバーライド：`ChangeLog_format_PM_override.md`に記載
 
+### v1.4.0
+**変更点**: "マイクロカーネル内k方向4倍アンローリング"
+**結果**: 性能6%向上 `44.7 GFLOPS`
+**コメント**: "命令レベル並列性向上。理論性能の55.8%達成"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:55:00Z`
+- [x] **compile**
+    - status: `success`
+    - log: `コンパイル警告なし`
+- [x] **job**
+    - id: `4593433`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T10:55:00+09:00`
+    - end_time: `2025-12-30T10:55:01+09:00`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `44.7`
+    - unit: `GFLOPS`
+- [x] **sota**
+    - scope: `local`
+    - previous: `42.2`
+    - improvement: `+5.9%`
+- **params**:
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma -funroll-loops`
+    - simd_type: `AVX-512`
+    - micro_kernel: `6x16`
+    - k_unroll: `4`
+    - cache_blocking: `MC=48, KC=256, NC=256`
+
+</details>
+
 ### v1.3.0
 **変更点**: "キャッシュブロック48x256x256に調整（PG1.1参考）"
 **結果**: 性能25%向上 `42.2 GFLOPS`
