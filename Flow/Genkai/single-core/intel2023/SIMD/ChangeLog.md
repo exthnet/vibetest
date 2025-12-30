@@ -10,6 +10,47 @@
 
 ---
 
+### v1.5.0
+**変更点**: "6x16レジスタブロッキング+プリフェッチ+ブロック96x48x256"
+**結果**: 理論性能の67.7%達成 `54.2 GFLOPS`
+**コメント**: "プリフェッチとブロックサイズ拡大でv1.3.0から9%改善"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:53:00Z`
+- [x] **compile**
+    - status: `success`
+    - log: `icx -O3 -march=native -mavx512f -mfma`
+- [x] **job**
+    - id: `4593442`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T10:53:51+09:00`
+    - end_time: `2025-12-30T10:53:51+09:00`
+    - runtime_sec: `0.04`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `54.2`
+    - unit: `GFLOPS`
+    - efficiency: `67.7%`
+- [x] **sota**
+    - scope: `local`
+    - previous: `49.6`
+    - improvement: `+9.3%`
+- **params**:
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma`
+    - simd_type: `AVX-512`
+    - block_size: `96x48x256`
+    - reg_block: `6x16`
+    - prefetch: `T0`
+
+</details>
+
+---
+
 ### v1.3.0
 **変更点**: "6x16レジスタブロッキング+48x48x256キャッシュブロック"
 **結果**: 理論性能の62.0%達成 `49.6 GFLOPS` **Hardware SOTA更新**
