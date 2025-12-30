@@ -10,6 +10,46 @@
 
 ---
 
+### v1.3.0
+**変更点**: "6x16レジスタブロッキング+48x48x256キャッシュブロック"
+**結果**: 理論性能の62.0%達成 `49.6 GFLOPS` **Hardware SOTA更新**
+**コメント**: "PG1.1のSOTA(48.3)を超過。6行×16列(2xAVX-512)で更にレジスタ再利用を最適化"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:49:00Z`
+- [x] **compile**
+    - status: `success`
+    - log: `icx -O3 -march=native -mavx512f -mfma`
+- [x] **job**
+    - id: `4593424`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T10:49:40+09:00`
+    - end_time: `2025-12-30T10:49:40+09:00`
+    - runtime_sec: `0.04`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `49.6`
+    - unit: `GFLOPS`
+    - efficiency: `62.0%`
+- [x] **sota**
+    - scope: `hardware`
+    - previous: `48.3`
+    - improvement: `+2.7%`
+- **params**:
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma`
+    - simd_type: `AVX-512`
+    - block_size: `48x48x256`
+    - reg_block: `6x16`
+
+</details>
+
+---
+
 ### v1.2.0
 **変更点**: "レジスタブロッキング(4x8)+ブロッキング(64x64x256)"
 **結果**: 理論性能の43.5%達成 `34.8 GFLOPS`
