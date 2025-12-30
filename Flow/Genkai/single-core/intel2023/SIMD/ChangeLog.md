@@ -10,6 +10,46 @@
 
 ---
 
+### v1.2.0
+**変更点**: "レジスタブロッキング(4x8)+ブロッキング(64x64x256)"
+**結果**: 理論性能の43.5%達成 `34.8 GFLOPS`
+**コメント**: "v1.1.0から2.5倍改善。4行同時処理でレジスタ再利用最適化"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:47:00Z`
+- [x] **compile**
+    - status: `success`
+    - log: `icx -O3 -march=native -mavx512f -mfma`
+- [x] **job**
+    - id: `4593415`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T10:47:46+09:00`
+    - end_time: `2025-12-30T10:47:46+09:00`
+    - runtime_sec: `0.06`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `34.8`
+    - unit: `GFLOPS`
+    - efficiency: `43.5%`
+- [x] **sota**
+    - scope: `local`
+    - previous: `14.1`
+    - improvement: `+146.8%`
+- **params**:
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma`
+    - simd_type: `AVX-512`
+    - block_size: `64x64x256`
+    - reg_block: `4x8`
+
+</details>
+
+---
+
 ### v1.1.0
 **変更点**: "ブロッキング(64x64x256)+AVX-512による最適化"
 **結果**: 理論性能の17.6%達成 `14.1 GFLOPS`

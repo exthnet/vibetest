@@ -12,27 +12,32 @@
 
 ### v1.2.0
 **変更点**: "B行列転置による連続メモリアクセス最適化"
-**結果**: コンパイル・実行待ち `-`
-**コメント**: "A,B^T両方がk方向に連続アクセス、水平加算で内積計算"
+**結果**: 理論性能の22.6%達成 `18.1 GFLOPS`
+**コメント**: "水平加算のオーバーヘッドが大きく、v1.1.0より低性能"
 
 <details>
 
 - **生成時刻**: `2025-12-30T01:41:54Z`
-- [ ] **compile**
-    - status: `pending`
-- [ ] **job**
-    - id: `-`
+- [x] **compile**
+    - status: `success`
+    - warnings: `-xCORE-AVX512 overrides -march=native`
+- [x] **job**
+    - id: `4593417`
     - resource_group: `a-batch-low`
-    - status: `pending`
-- [ ] **test**
-    - status: `pending`
-    - performance: `-`
+    - start_time: `2025-12-30T01:47:49Z`
+    - end_time: `2025-12-30T01:48:00Z`
+    - runtime_sec: `11`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `18.1`
     - unit: `GFLOPS`
+    - efficiency: `22.6%`
 - **params**:
     - nodes: `1`
     - cores: `1`
     - matrix_size: `1000`
-    - compile_flags: `-O3 -march=native -xCORE-AVX512 -qopt-zmm-usage=high`
+    - compile_flags: `-O3 -xCORE-AVX512 -qopt-zmm-usage=high`
     - simd_type: `AVX-512`
     - block_size: `64`
     - transpose_b: `true`
@@ -43,27 +48,35 @@
 
 ### v1.1.0
 **変更点**: "4x24レジスタブロッキングマイクロカーネル実装"
-**結果**: コンパイル・実行待ち `-`
-**コメント**: "12個のAVX-512レジスタでCブロック保持、FMA命令フル活用"
+**結果**: 理論性能の66.9%達成 `53.5 GFLOPS` **🏆SOTA**
+**コメント**: "12個のAVX-512レジスタでCブロック保持、FMA命令フル活用。PG1.1の48.3 GFLOPSを上回る"
 
 <details>
 
 - **生成時刻**: `2025-12-30T01:39:56Z`
-- [ ] **compile**
-    - status: `pending`
-- [ ] **job**
-    - id: `-`
+- [x] **compile**
+    - status: `success`
+- [x] **job**
+    - id: `4593412`
     - resource_group: `a-batch-low`
-    - status: `pending`
-- [ ] **test**
-    - status: `pending`
-    - performance: `-`
+    - start_time: `2025-12-30T01:47:00Z`
+    - end_time: `2025-12-30T01:47:10Z`
+    - runtime_sec: `10`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `53.5`
     - unit: `GFLOPS`
+    - efficiency: `66.9%`
+- [x] **sota**
+    - scope: `local`
+    - previous: `-`
+    - improvement: `first SOTA`
 - **params**:
     - nodes: `1`
     - cores: `1`
     - matrix_size: `1000`
-    - compile_flags: `-O3 -march=native -xCORE-AVX512 -qopt-zmm-usage=high`
+    - compile_flags: `-O3 -xCORE-AVX512 -qopt-zmm-usage=high`
     - simd_type: `AVX-512`
     - block_i: `64`
     - block_k: `256`
@@ -76,27 +89,32 @@
 
 ### v1.0.0
 **変更点**: "AVX-512 intrinsicsによるベクトル化とブロッキング最適化"
-**結果**: コンパイル・実行待ち `-`
-**コメント**: "i,k,jループ順、64x64ブロッキング、8要素同時処理"
+**結果**: 理論性能の21.9%達成 `17.5 GFLOPS`
+**コメント**: "基本実装。レジスタブロッキングなしのため性能限定的"
 
 <details>
 
 - **生成時刻**: `2025-12-30T01:38:12Z`
-- [ ] **compile**
-    - status: `pending`
-- [ ] **job**
-    - id: `-`
+- [x] **compile**
+    - status: `success`
+    - warnings: `-xCORE-AVX512 overrides -march=native`
+- [x] **job**
+    - id: `4593407`
     - resource_group: `a-batch-low`
-    - status: `pending`
-- [ ] **test**
-    - status: `pending`
-    - performance: `-`
+    - start_time: `2025-12-30T01:46:00Z`
+    - end_time: `2025-12-30T01:46:10Z`
+    - runtime_sec: `10`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `17.5`
     - unit: `GFLOPS`
+    - efficiency: `21.9%`
 - **params**:
     - nodes: `1`
     - cores: `1`
     - matrix_size: `1000`
-    - compile_flags: `-O3 -march=native -xCORE-AVX512 -qopt-zmm-usage=high`
+    - compile_flags: `-O3 -xCORE-AVX512 -qopt-zmm-usage=high`
     - simd_type: `AVX-512`
 
 </details>
