@@ -12,22 +12,29 @@
 
 ### v1.1.0
 **変更点**: "ブロッキング(64x64x256)+AVX-512による最適化"
-**結果**: コード生成完了、実行待ち `- GFLOPS`
-**コメント**: "L2キャッシュ効率向上のためブロッキング追加"
+**結果**: 理論性能の17.6%達成 `14.1 GFLOPS`
+**コメント**: "初回実行成功。更なる最適化が必要"
 
 <details>
 
 - **生成時刻**: `2025-12-30T01:39:30Z`
-- [ ] **compile**
-    - status: `pending`
-- [ ] **job**
-    - id: `-`
+- [x] **compile**
+    - status: `success`
+    - log: `icx -O3 -march=native -mavx512f -mfma`
+- [x] **job**
+    - id: `4593393`
     - resource_group: `a-batch-low`
-    - status: `pending`
-- [ ] **test**
-    - status: `pending`
-    - performance: `-`
+    - start_time: `2025-12-30T10:43:02+09:00`
+    - end_time: `2025-12-30T10:43:02+09:00`
+    - runtime_sec: `0.14`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `14.1`
     - unit: `GFLOPS`
+    - efficiency: `17.6%`
+- [x] **sota**
+    - scope: `local`
 - **params**:
     - nodes: `1`
     - cores: `1`

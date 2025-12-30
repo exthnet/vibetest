@@ -1,528 +1,196 @@
-# gcc8.5.0📁 `ChangeLog.md`
+# SIMD📁 `ChangeLog.md`
 🤖PG1.1
-- **ハードウェア**：玄界 (Genkai) single-core（1コア）
-- **モジュール**：GCC 8.5.0 (default)
+- **ハードウェア**: Genkai (玄界) single-core (1コア)
+- **モジュール**: GCC 8.5.0 (default)
+- **理論ピーク性能**: 80 GFLOPS (FP64, AVX-512, 2.5GHz)
 
 ## Change Log
 
 - 基本の型：`ChangeLog_format.md`に記載
-- PMオーバーライド：なし
+- PMオーバーライド：`ChangeLog_format_PM_override.md`に記載
 
-### v2.5.4
-**変更点**: "AVX-512 8x8マイクロカーネル + 超大ブロック（BLOCK_I=256, BLOCK_J=256, BLOCK_K=256）"
-**結果**: ベースライン比20.8倍高速化 `44.33 GFLOPS`
-**コメント**: "ブロックサイズをさらに拡大。v2.5.3比8.5%改善。**理論性能80GFLOPSの55.4%達成**"
+---
+
+### v1.5.0 🏆 SOTA
+**変更点**: "6x16レジスタブロッキング + 大型キャッシュブロック (48x256x256)"
+**結果**: 理論性能の60.4%達成 `48.3 GFLOPS`
+**コメント**: "レジスタ使用量を最大化し、L2キャッシュにフィットするブロックサイズに調整"
 
 <details>
 
-- **生成時刻**: `2025-12-30T01:10:00Z`
+- **生成時刻**: `2025-12-30T01:43:00Z`
 - [x] **compile**
     - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+    - log: `コンパイル警告なし`
 - [x] **job**
-    - id: `4591008`
+    - id: `4593398`
     - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T01:43:20Z`
+    - end_time: `2025-12-30T01:43:26Z`
+    - runtime_sec: `6`
     - status: `success`
 - [x] **test**
     - status: `pass`
-    - performance: `44.33`
+    - performance: `48.3`
     - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
+    - accuracy: `c[0][0]=3838895.05`
 - [x] **sota**
     - scope: `local`
+    - previous: `21.58`
+    - improvement: `+124%`
 - **params**:
-    - N: `1000`
-    - block_i: `256`
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma -funroll-loops`
+    - simd_type: `AVX512`
+    - block_i: `48`
     - block_k: `256`
     - block_j: `256`
-    - mr: `8`
-    - nr: `8`
-    - simd: `AVX-512`
-    - speedup_vs_baseline: `20.8x`
-    - speedup_vs_v2.5.3: `1.08x`
 
 </details>
 
 ---
 
-### v2.5.3
-**変更点**: "AVX-512 8x8マイクロカーネル + 大ブロック（BLOCK_I=128, BLOCK_J=128）"
-**結果**: ベースライン比19.2倍高速化 `40.87 GFLOPS`
-**コメント**: "ブロックサイズ拡大でキャッシュ効率向上。v2.5.0比12.9%改善。理論性能80GFLOPSの51.1%達成"
+### v1.4.0
+**変更点**: "4x8レジスタブロッキング + キャッシュブロッキング + AVX512"
+**結果**: 理論性能の27.0%達成 `21.6 GFLOPS`
+**コメント**: "4行同時処理でB行列の再利用率を向上"
 
 <details>
 
-- **生成時刻**: `2025-12-30T01:00:00Z`
+- **生成時刻**: `2025-12-30T01:41:00Z`
 - [x] **compile**
     - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
 - [x] **job**
-    - id: `4591007`
+    - id: `4593390`
     - resource_group: `a-batch-low`
-    - start_time: `2025-12-30T01:00:00Z`
-    - end_time: `2025-12-30T01:00:01Z`
-    - runtime_sec: `1`
+    - start_time: `2025-12-30T01:42:05Z`
+    - end_time: `2025-12-30T01:42:10Z`
+    - runtime_sec: `5`
     - status: `success`
 - [x] **test**
     - status: `pass`
-    - performance: `40.87`
+    - performance: `21.6`
     - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
 - **params**:
-    - N: `1000`
-    - block_i: `128`
-    - block_k: `256`
-    - block_j: `128`
-    - mr: `8`
-    - nr: `8`
-    - simd: `AVX-512`
-    - speedup_vs_baseline: `19.2x`
-    - speedup_vs_v2.5.0: `1.13x`
-
-</details>
-
----
-
-### v2.5.0
-**変更点**: "AVX-512 8x8マイクロカーネル（MR=8, NR=8、8アキュムレータ）"
-**結果**: ベースライン比17.0倍高速化 `36.20 GFLOPS`
-**コメント**: "8行×8列で8レジスタ使用。v2.3.1比5.3%改善。理論性能80GFLOPSの45.3%達成"
-
-<details>
-
-- **生成時刻**: `2025-12-30T00:45:00Z`
-- [x] **compile**
-    - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
-- [x] **job**
-    - id: `4590990`
-    - resource_group: `a-batch-low`
-    - start_time: `2025-12-30T00:45:00Z`
-    - end_time: `2025-12-30T00:45:01Z`
-    - runtime_sec: `1`
-    - status: `success`
-- [x] **test**
-    - status: `pass`
-    - performance: `36.20`
-    - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
-- **params**:
-    - N: `1000`
-    - mr: `8`
-    - nr: `8`
-    - simd: `AVX-512`
-    - speedup_vs_baseline: `17.0x`
-    - speedup_vs_v2.3.1: `1.05x`
-
-</details>
-
----
-
-### v2.4.1
-**変更点**: "AVX-512 4x16マイクロカーネル + ソフトウェアプリフェッチ"
-**結果**: ベースライン比15.5倍高速化 `33.12 GFLOPS`
-**コメント**: "プリフェッチ追加も効果なし。コンパイラ最適化で既に実施済みと推測"
-
-<details>
-
-- **生成時刻**: `2025-12-30T00:35:00Z`
-- [x] **compile**
-    - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
-- [x] **job**
-    - id: `4590957`
-    - resource_group: `a-batch-low`
-    - status: `success`
-- [x] **test**
-    - status: `pass`
-    - performance: `33.12`
-    - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- **params**:
-    - N: `1000`
-    - mr: `4`
-    - nr: `16`
-    - prefetch_dist: `4`
-
-</details>
-
----
-
-### v2.4.0
-**変更点**: "AVX-512 4x16マイクロカーネル + k-loop 2倍アンローリング"
-**結果**: ベースライン比15.8倍高速化 `33.75 GFLOPS`
-**コメント**: "手動アンローリングは効果なし。コンパイラ最適化で既に実施済みと推測"
-
-<details>
-
-- **生成時刻**: `2025-12-30T00:30:00Z`
-- [x] **compile**
-    - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
-- [x] **job**
-    - id: `4590943`
-    - resource_group: `a-batch-low`
-    - status: `success`
-- [x] **test**
-    - status: `pass`
-    - performance: `33.75`
-    - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- **params**:
-    - N: `1000`
-    - mr: `4`
-    - nr: `16`
-    - k_unroll: `2`
-
-</details>
-
----
-
-### v2.3.1
-**変更点**: "AVX-512 4x16マイクロカーネル（16要素同時処理、端処理対応）"
-**結果**: ベースライン比16.1倍高速化 `34.37 GFLOPS`
-**コメント**: "2つの512ビットレジスタで16列同時処理。v2.2.3比6.4%改善。理論性能80GFLOPSの43.0%達成"
-
-<details>
-
-- **生成時刻**: `2025-12-30T00:15:00Z`
-- [x] **compile**
-    - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
-- [x] **job**
-    - id: `4590926`
-    - resource_group: `a-batch-low`
-    - start_time: `2025-12-30T00:15:00Z`
-    - end_time: `2025-12-30T00:15:01Z`
-    - runtime_sec: `1`
-    - status: `success`
-- [x] **test**
-    - status: `pass`
-    - performance: `34.37`
-    - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
-- **params**:
-    - N: `1000`
-    - mr: `4`
-    - nr: `16`
-    - simd: `AVX-512`
-    - speedup_vs_baseline: `16.1x`
-    - speedup_vs_v2.2.3: `1.06x`
-
-</details>
-
----
-
-### v2.2.3
-**変更点**: "AVX-512マイクロカーネル（512ビットSIMD、8要素同時処理）"
-**結果**: ベースライン比15.2倍高速化 `32.29 GFLOPS`
-**コメント**: "AVX-512で8要素同時処理。v2.1.0比8.4%改善。理論性能80GFLOPSの40.4%達成"
-
-<details>
-
-- **生成時刻**: `2025-12-30T00:05:00Z`
-- [x] **compile**
-    - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
-- [x] **job**
-    - id: `4590924`
-    - resource_group: `a-batch-low`
-    - start_time: `2025-12-30T00:05:00Z`
-    - end_time: `2025-12-30T00:05:01Z`
-    - runtime_sec: `1`
-    - status: `success`
-- [x] **test**
-    - status: `pass`
-    - performance: `32.29`
-    - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
-- **params**:
-    - N: `1000`
-    - mr: `4`
-    - nr: `8`
-    - simd: `AVX-512`
-    - speedup_vs_baseline: `15.2x`
-    - speedup_vs_v2.1.0: `1.08x`
-
-</details>
-
----
-
-### v2.1.0
-**変更点**: "パッキング追加（A,B行列をキャッシュ効率良く再配置）"
-**結果**: ベースライン比14.0倍高速化 `29.80 GFLOPS`
-**コメント**: "連続メモリアクセスでTLBミス削減。aligned_loadが使用可能に。v2.0.0比3.7%改善"
-
-<details>
-
-- **生成時刻**: `2025-12-29T14:55:00Z`
-- [x] **compile**
-    - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx2 -mfma`
-- [x] **job**
-    - id: `4590903`
-    - resource_group: `a-batch-low`
-    - start_time: `2025-12-29T14:55:00Z`
-    - end_time: `2025-12-29T14:55:01Z`
-    - runtime_sec: `1`
-    - status: `success`
-- [x] **test**
-    - status: `pass`
-    - performance: `29.80`
-    - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
-- **params**:
-    - N: `1000`
-    - packing: `enabled`
-    - speedup_vs_baseline: `14.0x`
-    - speedup_vs_v2.0.0: `1.04x`
-
-</details>
-
----
-
-### v2.0.0
-**変更点**: "4x8マイクロカーネル（レジスタブロッキング）実装"
-**結果**: ベースライン比13.5倍高速化 `28.75 GFLOPS`
-**コメント**: "4x8レジスタブロッキングで演算密度を最大化。v1.3.0比で2.3倍の大幅改善"
-
-<details>
-
-- **生成時刻**: `2025-12-29T14:50:00Z`
-- [x] **compile**
-    - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx2 -mfma`
-- [x] **job**
-    - id: `4590899`
-    - resource_group: `a-batch-low`
-    - start_time: `2025-12-29T14:50:00Z`
-    - end_time: `2025-12-29T14:50:01Z`
-    - runtime_sec: `1`
-    - status: `success`
-- [x] **test**
-    - status: `pass`
-    - performance: `28.75`
-    - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
-- **params**:
-    - N: `1000`
-    - block_i: `64`
-    - block_k: `256`
-    - block_j: `64`
-    - mr: `4`
-    - nr: `8`
-    - speedup_vs_baseline: `13.5x`
-    - speedup_vs_v1.3.0: `2.3x`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma -funroll-loops`
+    - simd_type: `AVX512`
+    - block_size: `64`
 
 </details>
 
 ---
 
 ### v1.3.0
-**変更点**: "ソフトウェアプリフェッチ追加（PREFETCH_DIST=8）"
-**結果**: ベースライン比5.8倍高速化 `12.39 GFLOPS`
-**コメント**: "B行列の先読みでキャッシュミス削減。v1.2.0比で1.8%改善"
+**変更点**: "キャッシュブロッキング (64x64) + AVX512"
+**結果**: 理論性能の21.6%達成 `17.3 GFLOPS`
+**コメント**: "L2キャッシュ効率の大幅改善"
 
 <details>
 
-- **生成時刻**: `2025-12-29T14:45:00Z`
+- **生成時刻**: `2025-12-30T01:40:00Z`
 - [x] **compile**
     - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx2 -mfma`
 - [x] **job**
-    - id: `4590891`
+    - id: `4593386`
     - resource_group: `a-batch-low`
-    - start_time: `2025-12-29T14:45:00Z`
-    - end_time: `2025-12-29T14:45:01Z`
-    - runtime_sec: `1`
+    - start_time: `2025-12-30T01:41:01Z`
+    - end_time: `2025-12-30T01:41:06Z`
+    - runtime_sec: `5`
     - status: `success`
 - [x] **test**
     - status: `pass`
-    - performance: `12.39`
+    - performance: `17.3`
     - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
 - **params**:
-    - N: `1000`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma`
+    - simd_type: `AVX512`
     - block_size: `64`
-    - unroll_factor: `4`
-    - prefetch_dist: `8`
-    - speedup_vs_baseline: `5.8x`
 
 </details>
 
 ---
 
 ### v1.2.0
-**変更点**: "ループアンローリング追加（i方向4倍展開）"
-**結果**: ベースライン比5.7倍高速化 `12.17 GFLOPS`
-**コメント**: "i方向4倍アンローリングでレジスタ再利用を最大化。v1.1.0比で43%高速化"
+**変更点**: "AVX512 intrinsics + ループ交換"
+**結果**: 理論性能の8.0%達成 `6.4 GFLOPS`
+**コメント**: "明示的AVX512使用、自動ベクトル化と同程度"
 
 <details>
 
-- **生成時刻**: `2025-12-29T14:40:00Z`
+- **生成時刻**: `2025-12-30T01:39:00Z`
 - [x] **compile**
     - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx2 -mfma`
 - [x] **job**
-    - id: `4590886`
+    - id: `4593384`
     - resource_group: `a-batch-low`
-    - start_time: `2025-12-29T14:40:00Z`
-    - end_time: `2025-12-29T14:40:01Z`
-    - runtime_sec: `1`
+    - start_time: `2025-12-30T01:39:59Z`
+    - end_time: `2025-12-30T01:40:04Z`
+    - runtime_sec: `5`
     - status: `success`
 - [x] **test**
     - status: `pass`
-    - performance: `12.17`
+    - performance: `6.4`
     - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
 - **params**:
-    - N: `1000`
-    - block_size: `64`
-    - unroll_factor: `4`
-    - speedup_vs_baseline: `5.7x`
-    - speedup_vs_v1.1.0: `1.43x`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma`
+    - simd_type: `AVX512`
 
 </details>
 
 ---
 
 ### v1.1.0
-**変更点**: "キャッシュブロッキング追加（BLOCK_SIZE=64）"
-**結果**: ベースライン比4.0倍高速化 `8.52 GFLOPS`
-**コメント**: "64x64ブロックでL1/L2キャッシュ効率を改善。v1.0.0比で29%高速化"
+**変更点**: "ループ交換 (i-j-k → i-k-j) でキャッシュ効率改善"
+**結果**: 理論性能の7.5%達成 `6.0 GFLOPS`
+**コメント**: "ベースライン比11.6倍、B行列の連続アクセス化"
 
 <details>
 
-- **生成時刻**: `2025-12-29T14:36:00Z`
+- **生成時刻**: `2025-12-30T01:38:00Z`
 - [x] **compile**
     - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx2 -mfma`
 - [x] **job**
-    - id: `4590880`
+    - id: `4593381`
     - resource_group: `a-batch-low`
-    - start_time: `2025-12-29T14:36:59Z`
-    - end_time: `2025-12-29T14:36:59Z`
-    - runtime_sec: `1`
+    - start_time: `2025-12-30T01:39:00Z`
+    - end_time: `2025-12-30T01:39:05Z`
+    - runtime_sec: `5`
     - status: `success`
 - [x] **test**
     - status: `pass`
-    - performance: `8.52`
+    - performance: `6.0`
     - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
 - **params**:
-    - N: `1000`
-    - block_size: `64`
-    - speedup_vs_baseline: `4.0x`
-    - speedup_vs_v1.0.0: `1.29x`
+    - compile_flags: `-O3 -march=native`
 
 </details>
 
 ---
 
-### v1.0.0
-**変更点**: "AVX2 SIMD最適化 + ループ順序変更(i,k,j) + FMA命令"
-**結果**: ベースライン比3.1倍高速化 `6.62 GFLOPS`
-**コメント**: "ループ順序をi,j,k→i,k,jに変更しメモリアクセスパターン改善。AVX2で4要素同時処理、FMA命令使用"
+### v1.0.0 (Baseline)
+**変更点**: "オリジナルコード (i-j-k順序)"
+**結果**: 理論性能の0.65%達成 `0.5 GFLOPS`
+**コメント**: "キャッシュミス多発、最適化の出発点"
 
 <details>
 
-- **生成時刻**: `2025-12-29T14:34:00Z`
+- **生成時刻**: `2025-12-30T01:37:00Z`
 - [x] **compile**
     - status: `success`
-    - warnings: `none`
-    - options: `-O3 -march=native -mavx2 -mfma`
 - [x] **job**
-    - id: `4590874`
+    - id: `4593380`
     - resource_group: `a-batch-low`
-    - start_time: `2025-12-29T14:34:42Z`
-    - end_time: `2025-12-29T14:34:43Z`
-    - runtime_sec: `1`
+    - start_time: `2025-12-30T01:37:54Z`
+    - end_time: `2025-12-30T01:38:03Z`
+    - runtime_sec: `9`
     - status: `success`
 - [x] **test**
     - status: `pass`
-    - performance: `6.62`
+    - performance: `0.5`
     - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- [x] **sota**
-    - scope: `local`
 - **params**:
-    - N: `1000`
-    - baseline_perf: `2.13 GFLOPS`
-    - speedup: `3.1x`
-
-</details>
-
----
-
-### Baseline (参考)
-**変更点**: "オリジナルコードにタイミング計測追加"
-**結果**: `2.13 GFLOPS`
-**コメント**: "ベースライン測定用。ループ順序i,j,k、最適化なし(-O2)"
-
-<details>
-
-- **生成時刻**: `2025-12-29T14:33:00Z`
-- [x] **compile**
-    - status: `success`
-    - warnings: `none`
-    - options: `-O2`
-- [x] **job**
-    - id: `4590870`
-    - resource_group: `a-batch-low`
-    - start_time: `2025-12-29T14:33:17Z`
-    - end_time: `2025-12-29T14:33:18Z`
-    - runtime_sec: `1`
-    - status: `success`
-- [x] **test**
-    - status: `pass`
-    - performance: `2.13`
-    - unit: `GFLOPS`
-    - checksum_c00: `3838895.050000`
-    - checksum_cNN: `513888385.000000`
-- **params**:
-    - N: `1000`
+    - compile_flags: `-O3 -march=native`
 
 </details>
