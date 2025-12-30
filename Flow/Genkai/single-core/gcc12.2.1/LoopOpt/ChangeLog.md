@@ -10,10 +10,28 @@
 
 ---
 
-### v3.3.0 ★NEW LOCAL SOTA★
+### v3.5.2 ★NEW LOCAL SOTA★
+**変更点**: "8x16マイクロカーネル + BLOCK_K=1024 + BLOCK_J=128 + prefetch"
+**結果**: `39.85 GFLOPS` (N=1000, 0.050秒)
+**コメント**: "ブロックサイズ最適化で49.8%効率達成！50%目標まであと0.2%"
+
+<details>
+
+- **生成時刻**: `2025-12-30T00:35:00Z`
+- [x] **compile**: options: `-O3 -march=native -mavx512f -mavx512vl -mfma`
+- [x] **job**: id: `4591021`, status: `success`
+- [x] **test**: performance: `39.85`, unit: `GFLOPS`, checksum: `一致`
+- [x] **sota**: scope: `local`
+- **params**: BLOCK_I: `64`, BLOCK_K: `1024`, BLOCK_J: `128`, mr: `8`, nr: `16`, prefetch: `enabled`
+
+</details>
+
+---
+
+### v3.3.0
 **変更点**: "8x16マイクロカーネル + ソフトウェアプリフェッチ追加"
 **結果**: `38.06 GFLOPS` (N=1000, 0.053秒)
-**コメント**: "v3.2.0から2.3%向上。理論性能の47.6%達成。50%目標まであと2.4%"
+**コメント**: "v3.2.0から2.3%向上。理論性能の47.6%達成"
 
 <details>
 
