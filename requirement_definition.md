@@ -2,8 +2,8 @@
 (Requirement Definition)
 
 ## プロジェクト情報
-- **プロジェクト名**: tmux_sample1
-- **作成日**: 2025-12-29
+- **プロジェクト名**: tmux_sample3
+- **作成日**: 2025-12-30
 
 ## 最適化対象
 ### コード取得方法
@@ -20,7 +20,7 @@
 - [x] 実行時間最小化
 - [ ] メモリ使用量最小化  
 - [ ] エネルギー効率最大化
-- [x] スケーラビリティ向上
+- [ ] スケーラビリティ向上
 - [ ] その他: 
 
 ## 概要
@@ -61,6 +61,9 @@ _remote_info に記載
 - [x] GCC 8.5.0 (default)
 - [x] GCC 12.2.1 (module load gcc-toolset/12で使用可能になります)
 - [x] GCC 13.3.1 (module load gcc-toolset/13で使用可能になります)
+- [x] oneAPI 2023 (module load intel/2023.2で使用可能になります）
+- [x] oneAPI 2024 (module load intel/2024.1で使用可能になります）
+- [x] oneAPI 2025 (module load intel/2025.1.3で使用可能になります）
 
 #### 並列化ライブラリ
 - 使用禁止
