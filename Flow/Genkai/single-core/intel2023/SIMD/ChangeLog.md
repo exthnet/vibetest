@@ -10,6 +10,48 @@
 
 ---
 
+### v1.6.0
+**変更点**: "v1.5.0+k方向ループアンローリング(4回展開)"
+**結果**: 理論性能の67.8%達成 `54.24 GFLOPS`
+**コメント**: "k-loopアンローリングはほぼ効果なし(+0.04 GFLOPS)"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:56:00Z`
+- [x] **compile**
+    - status: `success`
+    - log: `icx -O3 -march=native -mavx512f -mfma`
+- [x] **job**
+    - id: `4593448`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T10:56:03+09:00`
+    - end_time: `2025-12-30T10:56:03+09:00`
+    - runtime_sec: `0.037`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `54.24`
+    - unit: `GFLOPS`
+    - efficiency: `67.8%`
+- [x] **sota**
+    - scope: `local`
+    - previous: `54.2`
+    - improvement: `+0.07%`
+- **params**:
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma`
+    - simd_type: `AVX-512`
+    - block_size: `96x48x256`
+    - reg_block: `6x16`
+    - prefetch: `T0`
+    - k_unroll: `4`
+
+</details>
+
+---
+
 ### v1.5.0
 **変更点**: "6x16レジスタブロッキング+プリフェッチ+ブロック96x48x256"
 **結果**: 理論性能の67.7%達成 `54.2 GFLOPS`

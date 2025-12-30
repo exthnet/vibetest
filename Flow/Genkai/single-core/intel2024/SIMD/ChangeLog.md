@@ -8,6 +8,39 @@
 - 基本の型：`ChangeLog_format.md`に記載
 - PMオーバーライド：`ChangeLog_format_PM_override.md`に記載
 
+### v1.5.0
+**変更点**: "4x24マイクロカーネルに変更（PG1.6参考）"
+**結果**: 性能低下 `41.0 GFLOPS`
+**コメント**: "4x24カーネルはブロックサイズ調整が必要。v1.4.0の44.7がローカルSOTA維持"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:58:00Z`
+- [x] **compile**
+    - status: `success`
+- [x] **job**
+    - id: `4593449`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T10:58:00+09:00`
+    - end_time: `2025-12-30T10:58:01+09:00`
+    - runtime_sec: `1`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `41.0`
+    - unit: `GFLOPS`
+- **params**:
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -march=native -mavx512f -mfma -funroll-loops`
+    - simd_type: `AVX-512`
+    - micro_kernel: `4x24`
+    - k_unroll: `4`
+    - cache_blocking: `MC=48, KC=256, NC=240`
+
+</details>
+
 ### v1.4.0
 **変更点**: "マイクロカーネル内k方向4倍アンローリング"
 **結果**: 性能6%向上 `44.7 GFLOPS`

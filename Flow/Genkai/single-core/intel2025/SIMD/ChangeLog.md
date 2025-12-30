@@ -10,6 +10,118 @@
 
 ---
 
+### v1.1.3
+**変更点**: "k-loop 4段アンローリング追加"
+**結果**: 理論性能の69.0%達成 `55.2 GFLOPS`
+**コメント**: "v1.1.0ベース+k-loop展開でパイプライン効率向上。PG1.1の55.6 GFLOPSにほぼ匹敵"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:55:05Z`
+- [x] **compile**
+    - status: `success`
+- [x] **job**
+    - id: `4593455`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T01:56:50Z`
+    - end_time: `2025-12-30T01:57:10Z`
+    - runtime_sec: `20`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `55.2`
+    - unit: `GFLOPS`
+    - efficiency: `69.0%`
+- **params**:
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -xCORE-AVX512 -qopt-zmm-usage=high -funroll-loops`
+    - simd_type: `AVX-512`
+    - block_i: `64`
+    - block_k: `256`
+    - block_j: `512`
+    - micro_kernel: `4x24`
+    - k_unroll: `4`
+
+</details>
+
+---
+
+### v1.1.2
+**変更点**: "4x24維持+キャッシュブロック調整+プリフェッチ"
+**結果**: 理論性能の66.6%達成 `53.3 GFLOPS`
+**コメント**: "プリフェッチ追加も効果限定的。v1.1.0と同等"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:53:28Z`
+- [x] **compile**
+    - status: `success`
+- [x] **job**
+    - id: `4593445`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T01:54:30Z`
+    - end_time: `2025-12-30T01:54:40Z`
+    - runtime_sec: `10`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `53.3`
+    - unit: `GFLOPS`
+    - efficiency: `66.6%`
+- **params**:
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -xCORE-AVX512 -qopt-zmm-usage=high`
+    - simd_type: `AVX-512`
+    - block_i: `96`
+    - block_k: `128`
+    - block_j: `384`
+    - micro_kernel: `4x24`
+
+</details>
+
+---
+
+### v1.1.1
+**変更点**: "6x16レジスタブロッキング+48x256x256キャッシュブロック（PG1.1参考）"
+**結果**: 理論性能の65.1%達成 `52.1 GFLOPS`
+**コメント**: "4x24より微減。Intel 2025ではv1.1.0の4x24が最適"
+
+<details>
+
+- **生成時刻**: `2025-12-30T01:49:51Z`
+- [x] **compile**
+    - status: `success`
+- [x] **job**
+    - id: `4593429`
+    - resource_group: `a-batch-low`
+    - start_time: `2025-12-30T01:51:30Z`
+    - end_time: `2025-12-30T01:51:40Z`
+    - runtime_sec: `10`
+    - status: `success`
+- [x] **test**
+    - status: `pass`
+    - performance: `52.1`
+    - unit: `GFLOPS`
+    - efficiency: `65.1%`
+- **params**:
+    - nodes: `1`
+    - cores: `1`
+    - matrix_size: `1000`
+    - compile_flags: `-O3 -xCORE-AVX512 -qopt-zmm-usage=high`
+    - simd_type: `AVX-512`
+    - block_i: `48`
+    - block_k: `256`
+    - block_j: `256`
+    - micro_kernel: `6x16`
+
+</details>
+
+---
+
 ### v1.2.0
 **変更点**: "B行列転置による連続メモリアクセス最適化"
 **結果**: 理論性能の22.6%達成 `18.1 GFLOPS`
